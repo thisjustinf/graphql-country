@@ -8,17 +8,21 @@ const Countries: FC = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
+  const { countries } = data;
+  console.log(countries);
   return (
-    <div>
-      {data &&
-        data?.countries?.map((country: Country) => (
-          <div key={country.code}>
-            <span>
-              {" "}
-              Country Code: {country.code} | Name: {country.name}
-            </span>
-          </div>
-        ))}
+    <div className="countries">
+      <ul>
+        {countries &&
+          countries?.map((country: Country) => (
+            <>
+              <li key={country.code}>
+                {" "}
+                Country Code: {country.code} | Name: {country.name}
+              </li>
+            </>
+          ))}
+      </ul>
     </div>
   );
 };
