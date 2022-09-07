@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { useQuery } from "@apollo/client";
-import { ALL_COUNTRIES_QUERY } from "../graphql/queries/country";
-import Country from "../types/Country";
+import { GET_COUNTRIES_QUERY } from "../../graphql/country";
+import Country from "../../types/Country";
 
 const Countries: FC = () => {
-  const { data, loading, error } = useQuery(ALL_COUNTRIES_QUERY);
+  const { data, loading, error } = useQuery(GET_COUNTRIES_QUERY);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
