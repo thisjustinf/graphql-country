@@ -1,15 +1,21 @@
 import { DocumentNode, gql } from "@apollo/client";
 
-export const ALL_LANGUAGES_QUERY: DocumentNode = gql`
-  query Countries($filter: CountryFilterInput) {
-    countries(filter: $filter) {
+export const GET_LANGUAGES_QUERY: DocumentNode = gql`
+  query Languages($filter: LanguageFilterInput) {
+    languages(filter: $filter) {
       code
-      currency
-      capital
+      name
+      native
     }
   }
 `;
 
-export const LANGUAGE_BY_NAME_QUERY: DocumentNode = gql`
-  query Country
+export const GET_LANGUAGE_BY_CODE_QUERY: DocumentNode = gql`
+  query Language($code: ID!){
+    language(code: $code){
+      code
+      name
+      native
+    }
+  }
 `;
