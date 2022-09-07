@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App";
@@ -9,16 +9,16 @@ const client = new ApolloClient({
   uri: "http://countries.trevorblades.com",
   cache: new InMemoryCache()
 });
-
-ReactDOM.render(
+const container = document.getElementById('app');
+const root = createRoot(container!); 
+root.render(
   <React.StrictMode>
     <ChakraProvider>
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>
     </ChakraProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
