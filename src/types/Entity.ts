@@ -5,7 +5,7 @@ import Language from './Language'
 export type Entity = Continent | Country | Language ;
 
 export enum EntityEnum {
-    Continent = "CONTINENT",
-    Country = "COUNTRY",
-    Language = "LANGUAGE",
+    CONTINENT = "Continent",
+    COUNTRY = "Country",
+    LANGUAGE = "Language",
   }
