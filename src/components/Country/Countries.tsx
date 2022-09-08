@@ -2,28 +2,22 @@ import React, { FC } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_COUNTRIES_QUERY } from "../../graphql/country";
 import Country from "../../types/Country";
+import { Container, Skeleton } from "@chakra-ui/react";
+import CountryCard from "./CountryCard";
 
-const Countries: FC = () => {
-  const { data, loading, error } = useQuery(GET_COUNTRIES_QUERY);
+interface ICountries {
+  countries?: Country[];
+}
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :</p>;
-  const { countries } = data;
-  console.log(countries);
+const Countries: FC<ICountries> = ({ countries }) => {
+  // const { countries } = data;
+  // console.log(countries);
   return (
-    <div className="countries">
-      <ul>
-        {countries &&
-          countries?.map((country: Country) => (
-            <>
-              <li key={country.code}>
-                {" "}
-                Country Code: {country.code} | Name: {country.name}
-              </li>
-            </>
-          ))}
-      </ul>
-    </div>
+    <Container>
+      {countries?.map((c: Country) => (
+        <CountryCard key={c.code} {...c} />
+      ))}
+    </Container>
   );
 };
 

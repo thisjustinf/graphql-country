@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import {
   Box,
   Heading,
@@ -5,33 +6,33 @@ import {
   InputGroup,
   InputRightElement,
   Select,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import React, { ChangeEvent, FC, useState } from "react";
+
+import { GET_COUNTRIES_QUERY } from "../../graphql/country";
+import Country from "../../types/Country";
 import { EntityEnum } from "../../types/Entity";
 import { FilterInput } from "../../types/inputs/FilterInput";
-import { useQuery } from "@apollo/client";
-import { GET_COUNTRIES_QUERY } from "../../graphql/country";
+import Countries from "../Country/Countries";
+
 interface ISearch {
   query?: string;
   filter?: FilterInput;
 }
 
 const Home: FC = () => {
+  const regex: string = "[A-Z]*";
   const [search, setSearch] = useState<ISearch>({
     query: "",
     filter: {
       code: {
-        eq: "",
-        regex: "",
-      },
-    },
+        regex
+      }
+    }
   });
-  const { loading, error, data } = useQuery(GET_COUNTRIES_QUERY, {
-    variables: {
-      filter: search.filter,
-    },
-  });
+  const [countries, setCountries] = useState<Country[]>([]);
+  const { loading, data } = useQuery(GET_COUNTRIES_QUERY);
   const [entity, setEntity] = useState<string>(EntityEnum.COUNTRY);
   const [selectPlaceholder, setSelectPlaceholder] = useState<string>("Country");
   const [inputPlaceholder, setInputPlaceholder] =
@@ -57,23 +58,19 @@ const Home: FC = () => {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setInputPlaceholder(
-      value === EntityEnum.CONTINENT
-        ? "Enter Continent"
-        : value === EntityEnum.LANGUAGE
-        ? "Enter Language"
-        : "Enter Country"
-    );
+    const { name, value } = e.target;
+    setSearch({
+      ...search,
+      [name]: value
+    });
+    if (!loading && data) {
+      const filteredCountries: Country[] = data?.countries?.filter(
+        (c: Country) => c?.name?.includes(value)
+      );
+      setCountries(filteredCountries);
+      console.log(filteredCountries);
+    }
   };
-
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setSearch({
-  //     ...search,
-  //     [name]: value,
-  //   });
-  // };
 
   return (
     <Box
@@ -110,6 +107,7 @@ const Home: FC = () => {
           }
         />
       </InputGroup>
+      <Countries countries={countries} />
     </Box>
   );
 };
