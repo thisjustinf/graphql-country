@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App";
@@ -7,13 +7,13 @@ import reportWebVitals from "./reportWebVitals";
 
 const client = new ApolloClient({
   uri: "http://countries.trevorblades.com",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
-const container = document.getElementById('app');
-const root = createRoot(container!); 
+const container = document.getElementById("app");
+const root = createRoot(container!);
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider cssVarsRoot="#app">
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>
