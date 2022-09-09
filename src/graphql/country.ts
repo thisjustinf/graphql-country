@@ -5,6 +5,7 @@ export const GET_COUNTRIES_QUERY: DocumentNode = gql`
     countries(filter: $filter) {
       code
       capital
+      currency
       name
       emoji
       emojiU

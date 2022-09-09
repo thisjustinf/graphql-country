@@ -71,6 +71,10 @@ const Home: FC = () => {
           ? data?.countries.filter((c: Country) =>
               c.languages.some((lang: Language) => lang.name?.includes(value))
             )
+          : entity === EntityEnum.CONTINENT
+          ? data?.countries?.filter((c: Country) =>
+              c?.continent?.name.includes(value)
+            )
           : data?.countries?.filter((c: Country) => c?.name?.includes(value));
       setCountries(filteredCountries);
     }
