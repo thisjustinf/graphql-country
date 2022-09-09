@@ -8,7 +8,6 @@ export const GET_COUNTRIES_QUERY: DocumentNode = gql`
       currency
       name
       emoji
-      emojiU
       continent {
         name
       }
@@ -28,7 +27,6 @@ export const GET_COUNTRY_BY_CODE_QUERY: DocumentNode = gql`
       capital
       name
       emoji
-      emojiU
       continent {
         name
       }

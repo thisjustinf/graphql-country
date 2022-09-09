@@ -67,16 +67,21 @@ const Home: FC = () => {
       [name]: value
     });
     if (!loading && data) {
+      const regExp = new RegExp(`${value}`, "gi");
       const filteredCountries: Country[] =
         entity === EntityEnum.LANGUAGE
-          ? data?.countries.filter((c: Country) =>
-              c.languages.some((lang: Language) => lang.name?.includes(value))
+          ? data?.countries.filter(
+              (c: Country) =>
+                c?.languages?.some((lang: Language) =>
+                  regExp.test(lang?.name as string)
+                ) //lang.name?.includes(value))
             )
           : entity === EntityEnum.CONTINENT
-          ? data?.countries?.filter((c: Country) =>
-              c?.continent?.name.includes(value)
+          ? data?.countries?.filter(
+              (c: Country) => regExp.test(c?.continent?.name)
+              // c?.continent?.name.includes(value)
             )
-          : data?.countries?.filter((c: Country) => c?.name?.includes(value));
+          : data?.countries?.filter((c: Country) => regExp.test(c?.name));
       setCountries(filteredCountries);
     }
   };
@@ -109,7 +114,9 @@ const Home: FC = () => {
               onChange={handleEntityChange}
               value={selectPlaceholder}
             >
-              <option value={EntityEnum.COUNTRY.toString()}>Country</option>
+              <option value={EntityEnum.COUNTRY.toString()} selected>
+                Country
+              </option>
               <option value={EntityEnum.CONTINENT.toString()}>Continent</option>
               <option value={EntityEnum.LANGUAGE.toString()}>Language</option>
             </Select>
