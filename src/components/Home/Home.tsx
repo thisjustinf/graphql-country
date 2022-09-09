@@ -14,6 +14,7 @@ import { GET_COUNTRIES_QUERY } from "../../graphql/country";
 import Country from "../../types/Country";
 import { EntityEnum } from "../../types/Entity";
 import { FilterInput } from "../../types/inputs/FilterInput";
+import Language from "../../types/Language";
 import Countries from "../Country/Countries";
 
 interface ISearch {
@@ -41,6 +42,7 @@ const Home: FC = () => {
   const handleEntityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setEntity(value);
+    if (countries.length !== 0) setCountries([]);
     setInputPlaceholder(
       value === EntityEnum.CONTINENT
         ? "Enter Continent"
@@ -64,11 +66,13 @@ const Home: FC = () => {
       [name]: value
     });
     if (!loading && data) {
-      const filteredCountries: Country[] = data?.countries?.filter(
-        (c: Country) => c?.name?.includes(value)
-      );
+      const filteredCountries: Country[] =
+        entity === EntityEnum.LANGUAGE
+          ? data?.countries.filter((c: Country) =>
+              c.languages.some((lang: Language) => lang.name?.includes(value))
+            )
+          : data?.countries?.filter((c: Country) => c?.name?.includes(value));
       setCountries(filteredCountries);
-      console.log(filteredCountries);
     }
   };
 
