@@ -35,13 +35,14 @@ const Home: FC = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const { loading, data } = useQuery(GET_COUNTRIES_QUERY);
   const [entity, setEntity] = useState<string>(EntityEnum.COUNTRY);
-  const [selectPlaceholder, setSelectPlaceholder] = useState<string>("Country");
+  const [selectPlaceholder, setSelectPlaceholder] = useState<string>("");
   const [inputPlaceholder, setInputPlaceholder] =
     useState<string>("Enter Country");
 
   const handleEntityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setEntity(value);
+    setSearch({ ...search, query: "" });
     if (countries.length !== 0) setCountries([]);
     setInputPlaceholder(
       value === EntityEnum.CONTINENT
