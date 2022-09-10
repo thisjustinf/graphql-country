@@ -1,4 +1,4 @@
-import { Box, HStack, Tag, TagLabel, Text } from "@chakra-ui/react";
+import { Box, HStack, Tag, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 import Country from "../../types/Country";
 
@@ -7,20 +7,23 @@ const CountryCard: FC<Country> = ({
   emoji,
   capital,
   currency,
-  continent
+  continent,
+  languages
 }) => {
   return (
     <Box
-      maxW="lg"
+      maxW="xl"
       maxH="md"
       overflow="hidden"
-      borderColor="gray.300"
+      borderColor="teal.300"
       borderRadius="md"
-      borderWidth="3px"
-      border="3px"
+      borderWidth="1px"
+      borderStyle="solid"
       padding="0.5em"
+      bgColor="teal.100"
+      my="2"
     >
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" w="100%" noOfLines={1} my="2">
         <Text fontSize="2em">
           {emoji} {name}
         </Text>
@@ -32,8 +35,9 @@ const CountryCard: FC<Country> = ({
           bgColor="teal"
           color="white"
           fontWeight="semibold"
+          w="auto"
         >
-          <TagLabel>🌐 {continent.name}</TagLabel>
+          🌐 Continent: {continent.name}
         </Tag>
         <Tag
           size="md"
@@ -41,8 +45,9 @@ const CountryCard: FC<Country> = ({
           bgColor="teal"
           color="white"
           fontWeight="semibold"
+          w="auto"
         >
-          <TagLabel>📍 {capital}</TagLabel>
+          📍 Capital: {capital}
         </Tag>
         <Tag
           size="md"
@@ -50,8 +55,21 @@ const CountryCard: FC<Country> = ({
           bgColor="teal"
           color="white"
           fontWeight="semibold"
+          w="auto"
         >
-          <TagLabel>💸 {currency}</TagLabel>
+          💸 Currency: {currency}
+        </Tag>
+        <Tag
+          size="md"
+          padding="5px"
+          bgColor="teal"
+          color="white"
+          fontWeight="semibold"
+          w="auto"
+        >
+          {languages.length === 1
+            ? `🗣 Language: ${languages[0].name}`
+            : `🗣 # of Languages: ${languages.length}`}
         </Tag>
       </HStack>
     </Box>

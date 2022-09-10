@@ -68,21 +68,23 @@ const Home: FC = () => {
     });
     if (!loading && data) {
       const regExp = new RegExp(`${value}`, "gi");
-      const filteredCountries: Country[] =
-        entity === EntityEnum.LANGUAGE
-          ? data?.countries.filter(
-              (c: Country) =>
+      if (value === "") {
+        setCountries([]);
+      } else {
+        const filteredCountries: Country[] =
+          entity === EntityEnum.LANGUAGE
+            ? data?.countries.filter((c: Country) =>
                 c?.languages?.some((lang: Language) =>
                   regExp.test(lang?.name as string)
-                ) //lang.name?.includes(value))
-            )
-          : entity === EntityEnum.CONTINENT
-          ? data?.countries?.filter(
-              (c: Country) => regExp.test(c?.continent?.name)
-              // c?.continent?.name.includes(value)
-            )
-          : data?.countries?.filter((c: Country) => regExp.test(c?.name));
-      setCountries(filteredCountries);
+                )
+              )
+            : entity === EntityEnum.CONTINENT
+            ? data?.countries?.filter((c: Country) =>
+                regExp.test(c?.continent?.name)
+              )
+            : data?.countries?.filter((c: Country) => regExp.test(c?.name));
+        setCountries(filteredCountries);
+      }
     }
   };
 
