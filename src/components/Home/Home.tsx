@@ -13,36 +13,23 @@ import React, { ChangeEvent, FC, useState } from "react";
 import { GET_COUNTRIES_QUERY } from "../../graphql/country";
 import Country from "../../types/Country";
 import { EntityEnum } from "../../types/Entity";
-import { FilterInput } from "../../types/inputs/FilterInput";
 import Language from "../../types/Language";
 import Countries from "../Country/Countries";
 
-interface ISearch {
-  query?: string;
-  filter?: FilterInput;
-}
-
 const Home: FC = () => {
-  const regex: string = "[A-Z]*";
-  const [search, setSearch] = useState<ISearch>({
-    query: "",
-    filter: {
-      code: {
-        regex
-      }
-    }
-  });
+  // const regex: string = "[A-Z]*";
+  const [search, setSearch] = useState<string>("");
   const [countries, setCountries] = useState<Country[]>([]);
   const { loading, data } = useQuery(GET_COUNTRIES_QUERY);
   const [entity, setEntity] = useState<string>(EntityEnum.COUNTRY);
-  const [selectPlaceholder, setSelectPlaceholder] = useState<string>("");
+  const [selectPlaceholder, setSelectPlaceholder] = useState<string>("Select");
   const [inputPlaceholder, setInputPlaceholder] =
     useState<string>("Enter Country");
 
   const handleEntityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setEntity(value);
-    setSearch({ ...search, query: "" });
+    setSearch("");
     if (countries.length !== 0) setCountries([]);
     setInputPlaceholder(
       value === EntityEnum.CONTINENT
@@ -61,11 +48,8 @@ const Home: FC = () => {
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSearch({
-      ...search,
-      [name]: value
-    });
+    const { value } = e.target;
+    setSearch(value);
     if (!loading && data) {
       const regExp = new RegExp(`${value}`, "gi");
       if (value === "") {
@@ -105,14 +89,14 @@ const Home: FC = () => {
           maxW="md"
           name="query"
           placeholder={inputPlaceholder}
-          value={search.query}
+          value={search}
           onChange={handleInputChange}
         />
         <InputRightElement
           children={
             <Select
               name="entity"
-              placeholder={selectPlaceholder}
+              placeholder={"Select"}
               onChange={handleEntityChange}
               value={selectPlaceholder}
             >

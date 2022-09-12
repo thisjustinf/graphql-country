@@ -1,6 +1,7 @@
 import { Box, HStack, Tag, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 import Country from "../../types/Country";
+import Language from "../../types/Language";
 
 const CountryCard: FC<Country> = ({
   name,
@@ -69,7 +70,9 @@ const CountryCard: FC<Country> = ({
         >
           {languages.length === 1
             ? `🗣 Language: ${languages[0].name}`
-            : `🗣 # of Languages: ${languages.length}`}
+            : `🗣 Languages: ${languages
+                .map((l: Language) => l.name)
+                .join(", ")}`}
         </Tag>
       </HStack>
     </Box>
