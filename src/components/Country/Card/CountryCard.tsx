@@ -1,7 +1,7 @@
 import { Box, HStack, Tag, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
-import Country from "../../types/Country";
-import Language from "../../types/Language";
+import Country from "../../../types/Country";
+import Language from "../../../types/Language";
 
 const CountryCard: FC<Country> = ({
   name,

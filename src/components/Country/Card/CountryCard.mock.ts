@@ -1,4 +1,4 @@
-import Country from "../../types/Country";
+import Country from "../../../types/Country";
 
 const mock: Country = {
   code: "JM",

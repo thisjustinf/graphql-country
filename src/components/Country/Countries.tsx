@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Country from "../../types/Country";
 import { Container } from "@chakra-ui/react";
-import CountryCard from "./CountryCard";
+import CountryCard from "./Card/CountryCard";
 
 interface ICountries {
   countries?: Country[];
