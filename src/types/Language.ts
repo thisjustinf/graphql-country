@@ -1,6 +1,6 @@
 export default interface Language {
-  code: string | number;
+  code: string;
   name?: string;
   native?: string;
-  rtl: boolean;
+  rtl?: boolean;
 }
