@@ -9,4 +9,10 @@ test("loads and displays country info", async () => {
   await screen.findByText("🇯🇲 Jamaica");
 
   expect(await screen.findByText("🇯🇲 Jamaica")).toBeInTheDocument();
+  expect(
+    await screen.findByText("🌐 Continent: North America")
+  ).toBeInTheDocument();
+  expect(await screen.findByText("📍 Capital: Kingston")).toBeInTheDocument();
+  expect(await screen.findByText("💸 Currency: JMD")).toBeInTheDocument();
+  expect(await screen.findByText("🗣 Language: English")).toBeInTheDocument();
 });
