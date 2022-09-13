@@ -1,5 +1,6 @@
 import Continent from "./Continent";
 import Language from "./Language";
+import State from "./State";
 
 export default interface Country {
   code: string;
@@ -10,6 +11,7 @@ export default interface Country {
   phone?: string;
   continent: Continent;
   languages: Language[];
+  states?: State[];
   emoji: string;
   emojiU?: string;
 }
